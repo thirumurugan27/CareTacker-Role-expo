@@ -9,9 +9,9 @@ import {
 } from "react-native";
 import {CalendarDaysIcon, FolderIcon} from "react-native-heroicons/outline";
 import {router} from "expo-router";
-import Notification from "../../components/Notification/Notification"; // ✅ using the reusable modal
+import Notification from "../../components/Notification/Notification";
+import MenuModal from "../../components/MealMenu/MealMenuModal"; // ✅ Import menu modal
 
-// Type for TaskCard props
 type TaskCardProps = {
   number: number;
   name: string;
@@ -21,7 +21,6 @@ type TaskCardProps = {
   onResolve: () => void;
 };
 
-// Helper to get today’s date string
 const getTodayDate = () => {
   const today = new Date();
   const day = String(today.getDate()).padStart(2, "0");
@@ -32,7 +31,6 @@ const getTodayDate = () => {
 
 const todayStr = getTodayDate();
 
-// Task Card UI
 const TaskCard = ({
   number,
   name,
@@ -66,29 +64,8 @@ const TaskCard = ({
   </View>
 );
 
-// Dummy notification data
-const notifications = [
-  // {
-  //   date: "07-03-2025",
-  //   data: [
-  //     {id: 1, type: "Complaint", message: "Electric issue", status: "Resolved"},
-  //     {
-  //       id: 2,
-  //       type: "Leave",
-  //       message: "05:00 PM - 06:00 PM",
-  //       status: "Approved",
-  //     },
-  //   ],
-  // },
-  // {
-  //   date: "06-03-2025",
-  //   data: [
-  //     {id: 3, type: "Complaint", message: "Water leakage", status: "Pending"},
-  //   ],
-  // },
-];
+const notifications: any[] = [];
 
-// Dummy task data
 const taskData: Record<string, TaskCardProps[]> = {
   "05-08-2025": [
     {
@@ -122,12 +99,16 @@ const taskData: Record<string, TaskCardProps[]> = {
 
 export default function Home() {
   const [showNotification, setShowNotification] = useState(false);
+  const [showMenuModal, setShowMenuModal] = useState(false); // ✅ state for menu modal
 
-  // Back handler for closing notification modal
   useEffect(() => {
     const onBackPress = () => {
       if (showNotification) {
         setShowNotification(false);
+        return true;
+      }
+      if (showMenuModal) {
+        setShowMenuModal(false);
         return true;
       }
       return false;
@@ -137,7 +118,7 @@ export default function Home() {
       onBackPress
     );
     return () => backHandler.remove();
-  }, [showNotification]);
+  }, [showNotification, showMenuModal]);
 
   return (
     <View className="flex-1 bg-white pt-[48px] px-[20px]">
@@ -211,7 +192,10 @@ export default function Home() {
             className="w-full h-full"
           />
         </Pressable>
-        <Pressable className="h-[56px] w-[56px] bg-primary justify-center items-center rounded-2xl">
+        <Pressable
+          className="h-[56px] w-[56px] bg-primary justify-center items-center rounded-2xl"
+          onPress={() => setShowMenuModal(true)} // ✅ open menu modal
+        >
           <Image
             source={require("../../assets/Icons/menu.png")}
             className="w-full h-full"
@@ -219,11 +203,16 @@ export default function Home() {
         </Pressable>
       </View>
 
-      {/* Notification Modal Call */}
+      {/* Modals */}
       <Notification
         visible={showNotification}
         onClose={() => setShowNotification(false)}
         notifications={notifications}
+      />
+      
+      <MenuModal
+        visible={showMenuModal}
+        onClose={() => setShowMenuModal(false)}
       />
     </View>
   );

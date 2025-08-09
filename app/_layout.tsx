@@ -13,12 +13,13 @@ export default function RootLayout() {
     <>
       {/* <MyDesk/> */}
       {/* <ApplyLeaveForm navigation={undefined} /> */}
-      {/* <Status/> */}
+
       {/* <Stack/> */}
-      {/* <Home /> */}
+      <Home />
       {/* <MyDesk/> */}
       {/* <Profile/> */}
-      <FileComplaint/>
+      {/* <FileComplaint /> */}
+      {/* <Status /> */}
     </>
   );
 }

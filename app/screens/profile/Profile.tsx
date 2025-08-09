@@ -1,51 +1,22 @@
 import React from "react";
-import {View, Text, Image, Pressable, StatusBar, Platform} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
 import {useNavigation} from "@react-navigation/native";
-import { router } from "expo-router";
-
-const profileData = {
-  name: "Caretaker name",
-  id: "7376232CT001",
-  email: "caretakername@bitsathy.ac.in",
-  designation: "Care Taker",
-  contact: "9876543210",
-  image: "https://randomuser.me/api/portraits/men/0.jpg",
-};
+import ScreenLayout from "@/app/components/ScreenLayout/ScreenLayout";
+import { Image, Pressable, Text, View } from "react-native";
 
 const Profile = () => {
+  const profileData = {
+    name: "Caretaker name",
+    id: "7376232CT001",
+    email: "caretakername@bitsathy.ac.in",
+    designation: "Care Taker",
+    contact: "9876543210",
+    image: "https://randomuser.me/api/portraits/men/0.jpg",
+  };
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      {/* StatusBar Background Fix for Android */}
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="red"
-        translucent={false}
-      />
-
-      {/* Header */}
-      <View className="bg-[#4B5CA2] h-[60px] pt-4 pb-3 px-0 flex-row items-center justify-start">
-        <Pressable
-          onPress={() => {
-            router.push('/screens/Home/Home');
-            console.log("Back pressed");
-          }}
-          className="pl-4 pr-2 py-2"
-          hitSlop={10}
-        >
-          <Image
-            source={require("../../assets/Images/backarrow.png")}
-            className="w-11 h-11"
-          />
-        </Pressable>
-        <Text className="text-white text-[18px] font-semibold absolute left-1/2 -translate-x-1/2">
-          Profile
-        </Text>
-      </View>
-
-      {/* Profile Image */}
+    <ScreenLayout title="Profile" navigation={navigation}>
+      {/* Your Profile screen content here */}
       <View className="items-center mt-7">
         <Image
           source={{uri: profileData.image}}
@@ -99,8 +70,12 @@ const Profile = () => {
           <Text className="text-white font-medium text-[17px]">Log out</Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </ScreenLayout>
   );
 };
 
 export default Profile;
+
+
+
+
