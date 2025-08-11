@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   Pressable,
@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
+import changeNavigationBarColor from "react-native-navigation-bar-color";
 import {router} from "expo-router";
 
 const GoBackArrow = require("../../assets/Icons/backarrow.png");
@@ -20,9 +21,13 @@ interface ScreenLayoutProps {
   children?: React.ReactNode;
 }
 
+
 const ScreenLayout: React.FC<ScreenLayoutProps> = ({title, children}) => {
+  changeNavigationBarColor("#4A5B9B", true);
   return (
+    
     <View style={styles.root}>
+      
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.safe}>
         {/* Header */}
