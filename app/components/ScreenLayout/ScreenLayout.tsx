@@ -23,7 +23,6 @@ interface ScreenLayoutProps {
 
 
 const ScreenLayout: React.FC<ScreenLayoutProps> = ({title, children}) => {
-  changeNavigationBarColor("#4A5B9B", true);
   return (
     
     <View style={styles.root}>
