@@ -8,9 +8,9 @@ import {
   Image,
 } from "react-native";
 import {CalendarDaysIcon, FolderIcon} from "react-native-heroicons/outline";
-import {router} from "expo-router";
 import Notification from "../../components/Notification/Notification";
 import MenuModal from "../../components/MealMenu/MealMenuModal"; // ✅ Import menu modal
+import {router} from "expo-router";
 
 type TaskCardProps = {
   number: number;
@@ -124,7 +124,11 @@ export default function Home() {
     <View className="flex-1 bg-white pt-[48px] px-[20px]">
       {/* Top Bar */}
       <View className="flex-row justify-between items-center mb-[24px]">
-        <Pressable onPress={() => router.push("/screens/profile/Profile")}>
+        <Pressable
+          onPress={() => {
+            (router.push("/screens/profile/Profile"), console.log("pressed"));
+          }}
+        >
           <Image
             source={require("../../../assets/allPNG/profile.png")}
             className="w-[42px] h-[42px] rounded-full"
@@ -147,13 +151,22 @@ export default function Home() {
 
       {/* Calendar & Desk Buttons */}
       <View className="flex-row justify-between mb-[24px]">
-        <Pressable className="flex-row items-center bg-[#F1F5F9] rounded-[8px] px-[16px] py-[12px] w-[155px] justify-center">
+        <Pressable
+          className="flex-row items-center 
+        bg-[#F1F5F9] rounded-[8px] px-[16px] py-[12px] w-[155px] justify-center"
+        >
           <CalendarDaysIcon size={20} color="#64748B" />
           <Text className="ml-[8px] font-medium text-[#64748B] text-[14px]">
             My calendar
           </Text>
         </Pressable>
-        <Pressable className="flex-row items-center bg-[#F1F5F9] rounded-[8px] px-[16px] py-[12px] w-[155px] justify-center">
+
+        <Pressable
+        onPress={()=>router.push("/screens/MyDesk/MyDesk")}
+          className="flex-row items-center 
+        bg-[#F1F5F9] rounded-[8px] px-[16px] 
+        py-[12px] w-[155px] justify-center"
+        >
           <FolderIcon size={20} color="#64748B" />
           <Text className="ml-[8px] font-medium text-[#64748B] text-[14px]">
             My desk
@@ -186,7 +199,10 @@ export default function Home() {
 
       {/* Floating Buttons */}
       <View className="absolute bottom-[32px] right-[16px]">
-        <Pressable className="h-[56px] w-[56px] bg-primary mb-4 justify-center items-center rounded-2xl">
+        <Pressable 
+        onPress={()=>router.push("/screens/Status/Status")}
+        className="h-[56px] w-[56px] bg-primary 
+        mb-4 justify-center items-center rounded-2xl">
           <Image
             source={require("../../assets/Icons/status.png")}
             className="w-full h-full"
@@ -209,7 +225,7 @@ export default function Home() {
         onClose={() => setShowNotification(false)}
         notifications={notifications}
       />
-      
+
       <MenuModal
         visible={showMenuModal}
         onClose={() => setShowMenuModal(false)}

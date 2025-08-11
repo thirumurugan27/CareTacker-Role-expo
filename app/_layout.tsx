@@ -1,25 +1,36 @@
-import { Stack } from "expo-router";
-import Home from "./screens/Home/Home";
+// _layout.tsx
+import {Stack} from "expo-router";
 import "./global.css";
-import Profile from "./screens/profile/Profile";
-import Status from "./screens/Status/Status";
-import ApplyLeaveForm from "./components/LeaveApply/LeaveApplyPage";
-import MyDesk from "./screens/MyDesk/MyDesk";
-import FileComplaint from "./components/FileComplaint/FileComplaint";
-
 
 export default function RootLayout() {
   return (
-    <>
-      {/* <MyDesk/> */}
-      {/* <ApplyLeaveForm navigation={undefined} /> */}
+    <Stack screenOptions={{headerShown: false}}>
+      {/* Home Screen */}
+      <Stack.Screen name="screens/Home/Home" options={{title: "Home"}} />
 
-      {/* <Stack/> */}
-      <Home />
-      {/* <MyDesk/> */}
-      {/* <Profile/> */}
-      {/* <FileComplaint /> */}
-      {/* <Status /> */}
-    </>
+      {/* Profile Screen */}
+      <Stack.Screen
+        name="screens/profile/Profile"
+        options={{title: "Profile"}}
+      />
+
+      {/* Status Screen */}
+      <Stack.Screen name="screens/Status/Status" options={{title: "Status"}} />
+
+      {/* Apply Leave Form */}
+      <Stack.Screen
+        name="components/LeaveApply/LeaveApplyPage"
+        options={{title: "Apply Leave"}}
+      />
+
+      {/* My Desk Screen */}
+      <Stack.Screen name="screens/MyDesk/MyDesk" options={{title: "My Desk"}} />
+
+      {/* File Complaint Screen */}
+      <Stack.Screen
+        name="components/FileComplaint/FileComplaint"
+        options={{title: "File Complaint"}}
+      />
+    </Stack>
   );
 }

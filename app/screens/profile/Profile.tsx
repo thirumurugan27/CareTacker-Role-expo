@@ -15,7 +15,7 @@ const Profile = () => {
   const navigation = useNavigation();
 
   return (
-    <ScreenLayout title="Profile" navigation={navigation}>
+    <ScreenLayout title="Profile">
       {/* Your Profile screen content here */}
       <View className="items-center mt-7">
         <Image

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {View, Text, Pressable, Image, BackHandler} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import Notification from "../../components/Notification/Notification";
+import {router} from "expo-router"; // ✅ Import router
 
 const notifications = [
   {
@@ -32,22 +33,32 @@ const MyDesk = () => {
     const onBackPress = () => {
       if (showNotification) {
         setShowNotification(false);
+        return true; // prevent default back
+      }
+      if (mealModalVisible) {
+        setMealModalVisible(false);
         return true;
       }
-      return false;
+      router.back(); // ✅ go back if no modal is open
+      return true;
     };
+
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       onBackPress
     );
     return () => backHandler.remove();
-  }, [showNotification]);
+  }, [showNotification, mealModalVisible]);
 
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
       {/* Top Row */}
       <View className="flex-row items-center justify-between mb-10 -mt-[1px]">
-        <Pressable className="mr-3 h-11 w-11">
+        {/* Back arrow */}
+        <Pressable
+          className="mr-3 h-11 w-11"
+          onPress={() => router.back()} // ✅ go back on click
+        >
           <Image
             source={require("../../assets/Icons/backarrowrounded.png")}
             className="w-full h-full"
@@ -86,6 +97,7 @@ const MyDesk = () => {
       {/* Main Cards */}
       <View className="flex-row justify-around">
         <Pressable
+        onPress={()=>router.push("/components/FileComplaint/FileComplaint")}
           className="items-center p-5 rounded-lg bg-white w-[140px] shadow"
           style={{
             shadowColor: "#000",
@@ -104,6 +116,7 @@ const MyDesk = () => {
         </Pressable>
 
         <Pressable
+        onPress={()=>router.push("/components/LeaveApply/LeaveApplyPage")}
           className="items-center p-5 rounded-lg bg-white w-[140px] shadow"
           style={{
             shadowColor: "#000",
@@ -144,7 +157,7 @@ const MyDesk = () => {
         </Pressable>
       </View>
 
-      {/* Reusable Notification Modal */}
+      {/* Notification Modal */}
       <Notification
         visible={showNotification}
         onClose={() => setShowNotification(false)}
