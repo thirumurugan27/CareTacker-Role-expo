@@ -36,13 +36,11 @@ const ScreenLayout: React.FC<ScreenLayoutProps> = ({title, children}) => {
         </View>
 
         {/* Non-scrollable KeyboardAvoidingView */}
-        <KeyboardAvoidingView
+        <View
           style={styles.content}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={HEADER_HEIGHT}
         >
           <View style={styles.contentContainer}>{children}</View>
-        </KeyboardAvoidingView>
+        </View>
       </SafeAreaView>
     </View>
   );

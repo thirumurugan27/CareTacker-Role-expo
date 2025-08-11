@@ -50,8 +50,8 @@ const FileComplaint = () => {
   };
 
   return (
-    <ScreenLayout title="File Complaint" navigation={{goBack: () => {}}}>
-      <View className="flex-1 bg-white pt-8">
+    <ScreenLayout title="File Complaint">
+      <View className="flex-1 bg-white pt-8 px-4">
         {/* Upload Image Label */}
         <Text className="text-[14px] text-gray-600 font-medium mb-5">
           Upload Image
