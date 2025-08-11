@@ -24,7 +24,7 @@ const ScreenLayout: React.FC<ScreenLayoutProps> = ({title, children}) => {
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
-      <SafeAreaView style={styles.safe}>
+      <View style={styles.safe}>
         {/* Header */}
         <View style={styles.header}>
           <Pressable onPress={() => router.back()}>
@@ -40,14 +40,14 @@ const ScreenLayout: React.FC<ScreenLayoutProps> = ({title, children}) => {
         >
           {children}
         </KeyboardAvoidingView>
-      </SafeAreaView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {flex: 1, backgroundColor: "#4A5B9B"},
-  safe: {flex: 1},
+  root: {height:'90%', backgroundColor: "#4A5B9B"},
+  safe: {height:'100%' ,marginTop:50 ,backgroundColor:'white'},
   flex: {flex: 1,backgroundColor:"white"},
   header: {
     flexDirection: "row",
