@@ -15,6 +15,7 @@ import {
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ScreenLayout from "../ScreenLayout/ScreenLayout"; // << use the keyboard-aware layout
+import { router } from "expo-router";
 
 // Icons
 const BioCalendar = require("../../assets/Icons/calendar.png");
@@ -279,7 +280,7 @@ const ApplyLeaveForm: React.FC<Props> = ({navigation}) => {
         {/* Buttons */}
         <View className="flex-row justify-end mb-8">
           <Pressable
-            onPress={() => navigation.goBack()}
+            onPress={() =>router.back()}
             className="w-[100px] items-center justify-center border border-[#4A5B9B] rounded-lg h-12 mr-2"
           >
             <Text className="text-[#4A5B9B] font-bold">Cancel</Text>

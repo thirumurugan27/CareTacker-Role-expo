@@ -64,7 +64,40 @@ const TaskCard = ({
   </View>
 );
 
-const notifications: any[] = [];
+const notifications = [
+  {
+    date: "07-03-2025",
+    data: [
+      {id: 1, type: "Complaint", message: "Electric issue", status: "Resolved"},
+      {
+        id: 2,
+        type: "Leave",
+        message: "05:00 PM - 06:00 PM",
+        status: "Approved",
+      },
+    ],
+  },
+  {
+    date: "06-03-2025",
+    data: [
+      {id: 3, type: "Complaint", message: "Water leakage", status: "Pending"},
+    ],
+  },
+  {
+    date: "05-03-2025",
+    data: [
+      {id: 4, type: "Complaint", message: "Water leakage", status: "Pending"},
+      {id: 5, type: "Complaint", message: "Water leakage", status: "Pending"},
+    ],
+  },
+  {
+    date: "04-03-2025",
+    data: [
+      {id: 6, type: "Complaint", message: "Water leakage", status: "Pending"},
+      {id: 7, type: "Complaint", message: "Water leakage", status: "Pending"},
+    ],
+  },
+];
 
 const taskData: Record<string, TaskCardProps[]> = {
   "05-08-2025": [
@@ -125,8 +158,9 @@ export default function Home() {
       {/* Top Bar */}
       <View className="flex-row justify-between items-center mb-[24px]">
         <Pressable
+          className=""
           onPress={() => {
-            (router.push("/screens/profile/Profile"), console.log("pressed"));
+            router.push("/screens/profile/Profile");
           }}
         >
           <Image
@@ -137,7 +171,7 @@ export default function Home() {
 
         <Pressable
           onPress={() => setShowNotification(true)}
-          className="bg-gray-200 rounded-full w-[42px] h-[42px] items-center justify-center relative"
+          className="bg-[#2A366333] rounded-full w-[42px] h-[42px] items-center justify-center relative"
         >
           <Image
             source={require("../../../assets/allPNG/announce.png")}
@@ -162,7 +196,7 @@ export default function Home() {
         </Pressable>
 
         <Pressable
-        onPress={()=>router.push("/screens/MyDesk/MyDesk")}
+          onPress={() => router.push("/screens/MyDesk/MyDesk")}
           className="flex-row items-center 
         bg-[#F1F5F9] rounded-[8px] px-[16px] 
         py-[12px] w-[155px] justify-center"
@@ -199,10 +233,11 @@ export default function Home() {
 
       {/* Floating Buttons */}
       <View className="absolute bottom-[32px] right-[16px]">
-        <Pressable 
-        onPress={()=>router.push("/screens/Status/Status")}
-        className="h-[56px] w-[56px] bg-primary 
-        mb-4 justify-center items-center rounded-2xl">
+        <Pressable
+          onPress={() => router.push("/screens/Status/Status")}
+          className="h-[56px] w-[56px] bg-primary 
+        mb-4 justify-center items-center rounded-2xl"
+        >
           <Image
             source={require("../../assets/Icons/status.png")}
             className="w-full h-full"

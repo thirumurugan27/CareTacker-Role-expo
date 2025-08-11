@@ -97,7 +97,7 @@ const MyDesk = () => {
       {/* Main Cards */}
       <View className="flex-row justify-around">
         <Pressable
-        onPress={()=>router.push("/components/FileComplaint/FileComplaint")}
+          onPress={() => router.push("/components/FileComplaint/FileComplaint")}
           className="items-center p-5 rounded-lg bg-white w-[140px] shadow"
           style={{
             shadowColor: "#000",
@@ -116,7 +116,7 @@ const MyDesk = () => {
         </Pressable>
 
         <Pressable
-        onPress={()=>router.push("/components/LeaveApply/LeaveApplyPage")}
+          onPress={() => router.push("/components/LeaveApply/LeaveApplyPage")}
           className="items-center p-5 rounded-lg bg-white w-[140px] shadow"
           style={{
             shadowColor: "#000",

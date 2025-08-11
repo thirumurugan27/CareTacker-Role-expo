@@ -14,7 +14,7 @@ module.exports = {
         bggreen:"#86CD821A",
         lettergreen:"#41973C",
         bggray:"#F9FAFB",
-        txtyellow:"#FFD355",
+        txtyellow: "#FFD355",
         
 
       },

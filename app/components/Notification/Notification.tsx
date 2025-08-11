@@ -1,5 +1,5 @@
 // components/Notification.tsx
-import React from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {
   Modal,
   View,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Animated,
 } from "react-native";
 
 type NotificationItem = {
@@ -32,7 +33,46 @@ const Notification: React.FC<NotificationProps> = ({
   onClose,
   notifications,
 }) => {
-  const hasNotifications = notifications && notifications.length > 0;
+  const [localNotifications, setLocalNotifications] =
+    useState<NotificationGroup[]>(notifications);
+
+  // Animation refs for fade out
+  const animationRefs = useRef<{[key: string]: Animated.Value}>({}).current;
+
+  // Create refs for each notification
+  useEffect(() => {
+    localNotifications.forEach((group) => {
+      group.data.forEach((item) => {
+        const key = `${group.date}-${item.id}`;
+        if (!animationRefs[key]) {
+          animationRefs[key] = new Animated.Value(1);
+        }
+      });
+    });
+  }, [localNotifications]);
+
+  const handleDelete = (groupDate: string, id: number) => {
+    const key = `${groupDate}-${id}`;
+    const anim = animationRefs[key];
+    if (!anim) return;
+
+    Animated.timing(anim, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setLocalNotifications((prev) =>
+        prev
+          .map((group) => ({
+            ...group,
+            data: group.data.filter((item) => item.id !== id),
+          }))
+          .filter((group) => group.data.length > 0)
+      );
+    });
+  };
+
+  const hasNotifications = localNotifications.length > 0;
 
   return (
     <Modal
@@ -50,39 +90,103 @@ const Notification: React.FC<NotificationProps> = ({
                 Notification
               </Text>
             </View>
-            <TouchableOpacity onPress={onClose} >
-              <View className="w-8 h-8 items-center justify-center">
+
+            {/* Top-right modal close button */}
+            <View
+              pointerEvents="box-none"
+              style={{
+                width: 40,
+                height: 40,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={onClose}
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                style={{
+                  width: 36,
+                  height: 36,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <Text className="text-black text-xl font-bold">✕</Text>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           </View>
 
           {/* Notifications */}
           {hasNotifications ? (
             <ScrollView showsVerticalScrollIndicator={false}>
-              {notifications.map((group) => (
+              {localNotifications.map((group) => (
                 <View key={group.date} className="mb-4">
                   {/* Date Title */}
                   <Text className="text-base text-[#4A5B9B] font-semibold mb-2">
                     {group.date}
                   </Text>
 
-                  {group.data.map((item, index) => {
-                    const isLast = index === group.data.length - 1;
+                  {group.data.map((item) => {
+                    const key = `${group.date}-${item.id}`;
+                    const animValue =
+                      animationRefs[key] || new Animated.Value(1);
 
                     return (
-                      <View
+                      <Animated.View
                         key={item.id}
-                        className={`py-3 relative ${
-                          !isLast ? "border-b border-gray-200" : ""
-                        }`}
+                        style={{
+                          opacity: animValue,
+                          transform: [
+                            {
+                              translateY: animValue.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [-20, 0],
+                              }),
+                            },
+                          ],
+                          borderBottomWidth: 1,
+                          borderBottomColor: "#e0e0e0",
+                        }}
+                        className="py-3 relative"
                       >
-                        {/* Close button */}
-                        <TouchableOpacity className="absolute right-0 top-2 bg-slate-300 w-5 h-5 rounded-full items-center justify-center">
-                          <Text className="text-primary text-xs font-black">
-                            ✕
-                          </Text>
-                        </TouchableOpacity>
+                        {/* Close button for each notification */}
+                        <View
+                          pointerEvents="box-none"
+                          style={{
+                            position: "absolute",
+                            right: 0,
+                            top: 8,
+                            zIndex: 10,
+                          }}
+                        >
+                          <TouchableOpacity
+                            onPress={() => {
+                              handleDelete(group.date, item.id);
+                              console.log("msg deleted");
+                            }}
+                            hitSlop={{
+                              top: 10,
+                              bottom: 10,
+                              left: 10,
+                              right: 10,
+                            }}
+                            style={{
+                              width: 20,
+                              height: 20,
+                              borderRadius: 18,
+                              backgroundColor: "#2A366333",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Image
+                              style={{alignSelf: "center"}}
+                              resizeMode="contain"
+                              className="w-3 h-3"
+                              source={require("../../assets/Icons/close.png")}
+                            />
+                          </TouchableOpacity>
+                        </View>
 
                         {/* Type */}
                         <Text className="text-base text-primary font-semibold mb-1">
@@ -98,12 +202,9 @@ const Notification: React.FC<NotificationProps> = ({
                             {item.status}
                           </Text>
                         </View>
-                      </View>
+                      </Animated.View>
                     );
                   })}
-
-                  {/* Bold bottom divider under group */}
-                  <View className="border-b-2 border-gray-300 mt-2" />
                 </View>
               ))}
             </ScrollView>
