@@ -13,7 +13,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 // import changeNavigationBarColor from "react-native-navigation-bar-color";
 import {router} from "expo-router";
 
-const GoBackArrow = require("../../../assets/Icons/backarrow.png");
+const GoBackArrow = require("../../assets/Icons/backarrow.png");
 const HEADER_HEIGHT = 56;
 
 interface ScreenLayoutProps {
