@@ -114,10 +114,10 @@ const MealMenuModal = ({visible, onClose}) => {
 
           {/* Feedback Button */}
           <Pressable
-            className="mt-5 bg-gray-100 p-3 rounded-md border border-gray-300"
+            className="self-center mt-5 bg-primary p-3 w-[50%] rounded-md border border-gray-300"
             onPress={() => setFeedbackVisible(true)}
           >
-            <Text className="text-gray-700 text-center">Give Feedback</Text>
+            <Text className="text-white text-center">Give Feedback</Text>
           </Pressable>
         </View>
       </View>

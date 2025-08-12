@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import {CalendarDaysIcon, FolderIcon} from "react-native-heroicons/outline";
 import Notification from "../../components/Notification/Notification";
-import MenuModal from "../../components/MealMenu/MealMenuModal"; // ✅ Import menu modal
+import MealMenuModal from "../../components/MealMenu/MealMenuModal"; // ✅ Import menu modal
 import {router} from "expo-router";
 
 type TaskCardProps = {
@@ -261,7 +261,7 @@ export default function Home() {
         notifications={notifications}
       />
 
-      <MenuModal
+      <MealMenuModal
         visible={showMenuModal}
         onClose={() => setShowMenuModal(false)}
       />

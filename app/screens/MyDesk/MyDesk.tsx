@@ -3,6 +3,7 @@ import {View, Text, Pressable, Image, BackHandler} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import Notification from "../../components/Notification/Notification";
 import {router} from "expo-router"; // ✅ Import router
+import MealMenuModal from "@/app/components/MealMenu/MealMenuModal";
 
 const notifications = [
   {
@@ -26,7 +27,7 @@ const notifications = [
 ];
 
 const MyDesk = () => {
-  const [mealModalVisible, setMealModalVisible] = useState(false);
+  const [showMenuModal, setShowMenuModal] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
@@ -35,8 +36,8 @@ const MyDesk = () => {
         setShowNotification(false);
         return true; // prevent default back
       }
-      if (mealModalVisible) {
-        setMealModalVisible(false);
+      if (showMenuModal) {
+        setShowMenuModal(false);
         return true;
       }
       router.back(); // ✅ go back if no modal is open
@@ -48,7 +49,7 @@ const MyDesk = () => {
       onBackPress
     );
     return () => backHandler.remove();
-  }, [showNotification, mealModalVisible]);
+  }, [showNotification, showMenuModal]);
 
   return (
     <SafeAreaView className="flex-1 bg-white p-5">
@@ -84,14 +85,14 @@ const MyDesk = () => {
       {/* Header row */}
       <View className="flex-row justify-between items-center mb-8">
         <Text className="text-[16px] text-[#2A366399]">My desk</Text>
-        <Pressable className="flex-row items-center border border-gray-200 rounded-lg p-2">
+        {/* <Pressable className="flex-row items-center border border-gray-200 rounded-lg p-2">
           <Text className="text-[16px] text-[#2A366399]">My calendar</Text>
           <Image
             source={require("../../assets/Icons/calendar.png")}
             className="ml-2 w-5 h-5"
             resizeMode="contain"
           />
-        </Pressable>
+        </Pressable> */}
       </View>
 
       {/* Main Cards */}
@@ -101,10 +102,10 @@ const MyDesk = () => {
           className="items-center p-5 rounded-lg bg-white w-[140px] shadow"
           style={{
             shadowColor: "#000",
-            shadowOffset: {width: -2, height: 4},
-            shadowOpacity: 0.9,
-            shadowRadius: 6,
-            elevation: 6,
+            shadowOffset: {width: 2, height: 2}, // Adjusted to emphasize left and bottom shadow
+            shadowOpacity: 0.1, // Reduced opacity for subtlety
+            shadowRadius: 4, // Smaller radius for a crisper shadow
+            elevation: 4, // Adjusted elevation for Android
           }}
         >
           <Image
@@ -120,10 +121,10 @@ const MyDesk = () => {
           className="items-center p-5 rounded-lg bg-white w-[140px] shadow"
           style={{
             shadowColor: "#000",
-            shadowOffset: {width: -2, height: 4},
-            shadowOpacity: 0.9,
-            shadowRadius: 6,
-            elevation: 6,
+            shadowOffset: {width: 2, height: 2}, // Adjusted to emphasize left and bottom shadow
+            shadowOpacity: 0.1, // Reduced opacity for subtlety
+            shadowRadius: 4, // Smaller radius for a crisper shadow
+            elevation: 4, // Adjusted elevation for Android
           }}
         >
           <Image
@@ -137,7 +138,10 @@ const MyDesk = () => {
 
       {/* Floating Buttons */}
       <View className="absolute bottom-[32px] right-[16px]">
-        <Pressable className="h-[56px] w-[56px] bg-[#4A5B9B] mb-4 rounded-2xl items-center justify-center">
+        <Pressable
+          onPress={() => router.push("/screens/Status/Status")}
+          className="h-[56px] w-[56px] bg-[#4A5B9B] mb-4 rounded-2xl items-center justify-center"
+        >
           <Image
             source={require("../../assets/Icons/status.png")}
             className="w-full h-full"
@@ -147,7 +151,7 @@ const MyDesk = () => {
 
         <Pressable
           className="h-[56px] w-[56px] bg-[#4A5B9B] rounded-2xl items-center justify-center"
-          onPress={() => setMealModalVisible(true)}
+          onPress={() => setShowMenuModal(true)}
         >
           <Image
             source={require("../../assets/Icons/menu.png")}
@@ -162,6 +166,10 @@ const MyDesk = () => {
         visible={showNotification}
         onClose={() => setShowNotification(false)}
         notifications={notifications}
+      />
+      <MealMenuModal
+        visible={showMenuModal}
+        onClose={() => setShowMenuModal(false)}
       />
     </SafeAreaView>
   );

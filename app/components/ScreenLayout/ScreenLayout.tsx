@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import {
   Image,
   Pressable,
@@ -10,10 +10,10 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import changeNavigationBarColor from "react-native-navigation-bar-color";
+// import changeNavigationBarColor from "react-native-navigation-bar-color";
 import {router} from "expo-router";
 
-const GoBackArrow = require("../../assets/Icons/backarrow.png");
+const GoBackArrow = require("../../../assets/Icons/backarrow.png");
 const HEADER_HEIGHT = 56;
 
 interface ScreenLayoutProps {
@@ -21,12 +21,9 @@ interface ScreenLayoutProps {
   children?: React.ReactNode;
 }
 
-
 const ScreenLayout: React.FC<ScreenLayoutProps> = ({title, children}) => {
   return (
-    
     <View style={styles.root}>
-      
       <StatusBar barStyle="light-content" />
       <View style={styles.safe}>
         {/* Header */}
@@ -38,21 +35,28 @@ const ScreenLayout: React.FC<ScreenLayoutProps> = ({title, children}) => {
         </View>
 
         {/* Keyboard avoiding container */}
-        <KeyboardAvoidingView
-          style={styles.flex}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        <SafeAreaView
+          style={{flex: 1, backgroundColor: "white"}}
+          edges={["top", "bottom"]}
+          // style={styles.flex}
+          // behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
           {children}
-        </KeyboardAvoidingView>
+        </SafeAreaView>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {height:'90%', backgroundColor: "#4A5B9B"},
-  safe: {height:'100%' ,marginTop:50 ,backgroundColor:'white'},
-  flex: {flex: 1,backgroundColor:"white"},
+  root: {height: "100%", backgroundColor: "#4A5B9B"},
+  safe: {
+    height: "100%",
+    marginTop: 30,
+    backgroundColor: "white",
+    paddingBottom: 20,
+  },
+  flex: {flex: 1, backgroundColor: "white"},
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -68,6 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     marginRight: 36,
+    alignSelf: "center",
   },
 });
 
