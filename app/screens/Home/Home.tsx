@@ -186,6 +186,7 @@ export default function Home() {
       {/* Calendar & Desk Buttons */}
       <View className="flex-row justify-between mb-[24px]">
         <Pressable
+        onPress={()=>router.push("/screens/MyCalender/MyCalender")}
           className="flex-row items-center 
         bg-[#F1F5F9] rounded-[8px] px-[16px] py-[12px] w-[155px] justify-center"
         >
